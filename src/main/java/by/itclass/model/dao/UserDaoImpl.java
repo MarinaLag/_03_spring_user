@@ -23,4 +23,32 @@ public class UserDaoImpl implements UserDao{
         }
       //  return new ArrayList<>();  //<User> он сам поймет
     }
+
+    @Override
+    public void removeById(int userId){
+        try (var session = factory.openSession()){
+            var transaction = session.beginTransaction();
+            var user = session.get(User.class,userId);
+            session.delete(user);
+            transaction.commit();
+        }
+    }
+
+    @Override
+    public void insert(User user) {
+        try (var session = factory.openSession()){
+            var transaction = session.beginTransaction();
+            session.persist(user);
+            transaction.commit();// commit - сохранить
+        }
+    }
+
+    @Override
+    public void update(User user) {
+        try (var session = factory.openSession()){
+            var transaction = session.beginTransaction();
+            session.update(user);
+            transaction.commit();// commit - сохранить
+        }
+    }
 }
