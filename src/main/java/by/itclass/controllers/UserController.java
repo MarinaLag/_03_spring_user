@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping(value = ALL_USER_URL) //ALL_USER_URL = "/all";
-    public String userControllerMethodWhichReturnAllUsers(Model model) {
+    public String getUserControllerMethodWhichReturnAllUsers(Model model) {
         var users = service.getAllUsers();
         model.addAttribute(USER_LIST_ATTR, users); //USER_LIST_ATTR = "userList"
         //имя в jsp файле
@@ -32,6 +32,7 @@ public class UserController {
     }
 
     @GetMapping(value = DELETE_USER_URL) //DELETE_USER_URL = "/delete";
+    //при нажатии на delete в браузер будет новый запрос с параметром id  и это будет число int
     public String deleteUserControllerById(@RequestParam(name = "id") int userId) {
         service.deleteById(userId);
         return INDEX_PAGE;  //INDEX_PAGE = "index";
@@ -44,11 +45,11 @@ public class UserController {
 
     @GetMapping(value = ADD_USER_URL) //ADD_USER_URL = "/add";
     public ModelAndView addUserFromForm() { //ничего не принимает,но создаст пустой
-        var modelAndView = new ModelAndView(ADD_PAGE, USER_ATTR, new User()); // на стронице add создай  пустой user
-
+        var modelAndView = new ModelAndView(ADD_PAGE, USER_ATTR, new User()); // на стронице add.jsp создай  пустой user
         return modelAndView;
     }
 
+    //получит данные и
     @PostMapping(value = SAVE_USER_URL) // SAVE_USER_URL = "/save";
     public String save(@ModelAttribute(name = USER_ATTR) User user) {
         service.add(user);

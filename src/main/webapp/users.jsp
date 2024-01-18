@@ -12,6 +12,8 @@
             <th>name</th>
             <th>age</th>
             <th>action</th>
+            <th>city</th>
+            <th>street</th>
         </tr>
         <c:forEach var="user" items="${userList}">
             <tr>
@@ -22,6 +24,8 @@
                     <a href="/delete?id=${user.id}">Delete</a>
                     <a href="/update?id=${user.id}&name=${user.name}&age=${user.age}">Update</a>
                 </td>
+                <td>${user.address.city}</td>
+                <td>${user.address.street}</td>
             </tr>
         </c:forEach>
     </table>

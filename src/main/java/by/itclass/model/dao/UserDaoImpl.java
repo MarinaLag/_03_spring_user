@@ -16,24 +16,28 @@ public class UserDaoImpl implements UserDao{
         this.factory = factory;
     }
 
+    //получить users
     @Override
     public List<User> selectAllUsers() {
+        //ЭТО SESSION HIBERNATE!!!!!!!!!а не session - корзина
         try (var session = factory.openSession()){  // открываем сессию (это сессия hibernate)
             return session.createQuery("from User", User.class).list(); //* это все поля
         }
       //  return new ArrayList<>();  //<User> он сам поймет
     }
 
+    // удалить user
     @Override
     public void removeById(int userId){
-        try (var session = factory.openSession()){
-            var transaction = session.beginTransaction();
-            var user = session.get(User.class,userId);
-            session.delete(user);
-            transaction.commit();
+        try (var session = factory.openSession()){ //открывает
+            var transaction = session.beginTransaction(); // начинаем
+            var user = session.get(User.class,userId); // получаем user - найдет его по userId
+            session.delete(user); // удаляем
+            transaction.commit(); // сохраняем
         }
     }
 
+    //
     @Override
     public void insert(User user) {
         try (var session = factory.openSession()){
@@ -43,6 +47,7 @@ public class UserDaoImpl implements UserDao{
         }
     }
 
+    // добавить user
     @Override
     public void update(User user) {
         try (var session = factory.openSession()){
